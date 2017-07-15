@@ -1,12 +1,12 @@
 $(document).ready(function(){
 
 var config = {
-    apiKey: "AIzaSyALBCC9G099FgUtPopNgecipp3zXQaPMp0",
-    authDomain: "clicking-things-e3110.firebaseapp.com",
-    databaseURL: "https://clicking-things-e3110.firebaseio.com",
-    projectId: "clicking-things-e3110",
-    storageBucket: "clicking-things-e3110.appspot.com",
-    messagingSenderId: "1029039386927"
+	apiKey: "AIzaSyALBCC9G099FgUtPopNgecipp3zXQaPMp0",
+	authDomain: "clicking-things-e3110.firebaseapp.com",
+	databaseURL: "https://clicking-things-e3110.firebaseio.com",
+	projectId: "clicking-things-e3110",
+	storageBucket: "clicking-things-e3110.appspot.com",
+	messagingSenderId: "1029039386927"
   };
 
 firebase.initializeApp(config);
@@ -43,35 +43,29 @@ $("#submit").on("click", function(event){
 db.ref().on("child_added", function(snap){
 
 	//calcNextTrain will take the value of the first train, the current time, and the interval, and return the time of the next train
-
+	
 	function calcNextTrain() {
-		//first train value
-		var a = moment(snap.val().firstTrain).format("X")
+		var a = snap.val().firstTrain;
+		var b = "HH:mm";
+		var c = moment(a, b);
+	
+
 		//current time
-		var b = moment().format("X");
-		//frequency
-		var c = moment(snap.val().freq).format("X")
+		var d = moment()  	
 
-		var d
+		var e = moment(moment(c).diff(d)).format('HH:mm')
 
-		for (i=0; i === -1; i++){
-			//adding the interval to the first train
-			a + c;
+		return e;
 
-			if (a > b) {
-				d = moment(a).format("HH:mm")
-				return
-			};
-		};
-		console.log(d)
-		return d
 	};
 
+	//calc away will take the first train, find the minutes between current time and the first train, and get the modulus in minutes
 	function calcAway(){
-		var a = moment(calcNextTrain()).format("X")
-		var b = moment().format("X")
-		var c = a.diff(b)
-		return c;
+		var a = snap.val().firstTrain;
+		var b = "HH:mm";
+		var c = moment(a, b);
+		
+		
 	};
 
 	var row = $("<tr>")
@@ -82,7 +76,7 @@ db.ref().on("child_added", function(snap){
 	var nextTrain = $("<td>" + calcNextTrain() + "</td>")
 	var minAway = $("<td>" + calcAway() + "</td>")
 
-	row.append(name).append(dest).append(freq).append(nextTrain)
+	row.append(name).append(dest).append(freq).append(nextTrain).append(minAway)
 
 	$("#tableBody").append(row)
 });
