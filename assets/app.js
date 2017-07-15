@@ -59,7 +59,7 @@ db.ref().on("child_added", function(snap){
 
 	};
 
-	//calc away will take the first train, find the minutes between current time and the first train, and get the modulus in minutes
+	//calcaway will take the first train, find the minutes between current time and the first train, and get the modulus of frequency into the difference
 	function calcAway(){
 		var a = snap.val().firstTrain;
 		var b = "HH:mm";
